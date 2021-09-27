@@ -5,7 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from .models import *
 
 
-from decouple import config,Csv
+
 import datetime as dt
 from django.http import JsonResponse
 import json
