@@ -15,4 +15,4 @@ from django.contrib.auth.models import User
 
 # Create your views here.
 def index(request):
-    return HttpResponse('Welcome to neighbout Hood application')
+    return HttpResponse(request,'hood/index.html')
