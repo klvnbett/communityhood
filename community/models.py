@@ -1,12 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
-
 from django.db.models import Q
 import datetime as dt
+from tinymce.models import HTMLField
 
 # Create your models here.
 
-
+Priority=(
+    ('Informational','Informational'),
+    ('High Priority','High Priority'),
+)
 class neighbourhood(models.Model):
     neighbourhood= models.CharField(max_length=100)
 
