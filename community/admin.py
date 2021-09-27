@@ -4,7 +4,7 @@ from . models import *
 # Register your models here.
 
 admin.site.register(Neighbourhood)
-admin.site.register(Health,HealthAdmin)
+admin.site.register(Health)
 admin.site.register(Business)
 admin.site.register(Healthservices)
 admin.site.register(Authorities)
