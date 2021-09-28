@@ -12,6 +12,7 @@ urlpatterns=[
     url(r'^businesses',views.businesses, name='businesses'),
     url(r'^view/blog/(\d+)',views.view_blog,name='view_blog'),
     url(r'^user/(?P<username>\w{0,50})',views.user_profile,name='user-profile'),
+    
 ]
 
 if settings.DEBUG:
