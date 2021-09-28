@@ -112,3 +112,94 @@ def new_blogpost(request):
         form = BlogPostForm()
 
     return render(request,'hood/blogpost_form.html',{"form":form})
+
+def new_business(request):
+    current_user=request.user
+    profile =Profile.objects.get(username=current_user)
+
+    if request.method=="POST":
+        form =BusinessForm(request.POST,request.FILES)
+        if form.is_valid():
+            business = form.save(commit = False)
+            business.owner = current_user
+            business.neighbourhood = profile.neighbourhood
+            business.save()
+
+        return HttpResponseRedirect('/businesses')
+
+    else:
+        form = BusinessForm()
+
+    return render(request,'business_form.html',{"form":form})
+
+
+@login_required(login_url='/accounts/login/')
+def create_profile(request):
+    current_user=request.user
+    if request.method=="POST":
+        form =ProfileForm(request.POST,request.FILES)
+        if form.is_valid():
+            profile = form.save(commit = False)
+            profile.username = current_user
+            profile.save()
+        return HttpResponseRedirect('/')
+
+    else:
+
+        form = ProfileForm()
+    return render(request,'profile_form.html',{"form":form})
+
+@login_required(login_url='/accounts/login/')
+def new_notification(request):
+    current_user=request.user
+    profile =Profile.objects.get(username=current_user)
+
+    if request.method=="POST":
+        form =notificationsForm(request.POST,request.FILES)
+        if form.is_valid():
+            notification = form.save(commit = False)
+            notification.author = current_user
+            notification.neighbourhood = profile.neighbourhood
+            notification.save()
+
+            if notification.priority == 'High Priority':
+                send_priority_email(profile.name,profile.email,notification.title,notification.notification,notification.author,notification.neighbourhood)
+
+        return HttpResponseRedirect('/notifications')
+
+
+    else:
+        form = notificationsForm()
+
+    return render(request,'notifications_form.html',{"form":form})
+
+@login_required(login_url='/accounts/login/')
+def update_profile(request):
+    current_user=request.user
+    if request.method=="POST":
+        instance = Profile.objects.get(username=current_user)
+        form =ProfileForm(request.POST,request.FILES,instance=instance)
+        if form.is_valid():
+            profile = form.save(commit = False)
+            profile.username = current_user
+            profile.save()
+
+        return redirect('Index')
+
+    elif Profile.objects.get(username=current_user):
+        profile = Profile.objects.get(username=current_user)
+        form = ProfileForm(instance=profile)
+    else:
+        form = ProfileForm()
+
+    return render(request,'hood/update_profile.html',{"form":form})
+
+
+
+
+
+def search_results(request):
+    if 'blog' in request.GET and request.GET["blog"]:
+        search_term = request.GET.get("blog")
+        searched_blogposts = BlogPost.search_blogpost(search_term)
+        message=f"{search_term}"
