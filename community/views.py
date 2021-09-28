@@ -130,10 +130,10 @@ def new_business(request):
     else:
         form = BusinessForm()
 
-    return render(request,'business_form.html',{"form":form})
+    return render(request,'hood/business_form.html',{"form":form})
 
 
-@login_required(login_url='/accounts/login/')
+
 def create_profile(request):
     current_user=request.user
     if request.method=="POST":
@@ -147,9 +147,9 @@ def create_profile(request):
     else:
 
         form = ProfileForm()
-    return render(request,'profile_form.html',{"form":form})
+    return render(request,'hood/profile_form.html',{"form":form})
 
-@login_required(login_url='/accounts/login/')
+
 def new_notification(request):
     current_user=request.user
     profile =Profile.objects.get(username=current_user)
@@ -171,9 +171,9 @@ def new_notification(request):
     else:
         form = notificationsForm()
 
-    return render(request,'notifications_form.html',{"form":form})
+    return render(request,'hood/notifications_form.html',{"form":form})
 
-@login_required(login_url='/accounts/login/')
+
 def update_profile(request):
     current_user=request.user
     if request.method=="POST":
