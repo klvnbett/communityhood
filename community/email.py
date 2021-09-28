@@ -9,8 +9,8 @@ def send_priority_email(name,receiver,title,message,author,neighbourhood):
     sender = 'cheplakwet4@gmail.com'
 
     #passing in the context variables
-    text_content = render_to_string('email/priority.txt',{"name":name,"title":title,"message":message,"author":author,"neighbourhood":neighbourhood})
-    html_content = render_to_string('email/priority.html',{"name":name,"title":title,"message":message,"author":author,"neighbourhood":neighbourhood})
+    text_content = render_to_string('email/communty.txt',{"name":name,"title":title,"message":message,"author":author,"neighbourhood":neighbourhood})
+    html_content = render_to_string('email/communty.html',{"name":name,"title":title,"message":message,"author":author,"neighbourhood":neighbourhood})
 
     msg = EmailMultiAlternatives(subject,text_content,sender,[receiver])
     msg.attach_alternative(html_content,'text/html')

@@ -23,7 +23,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'',include('community.urls')),
     url(r'^accounts/',include('registration.backends.simple.urls')),
-    
-    
     url(r'^tinymce',include('tinymce.urls')),
 ]

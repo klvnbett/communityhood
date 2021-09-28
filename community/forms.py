@@ -1,22 +1,27 @@
 from django import forms
 from .models import *
 
-class ProjectForm(forms.ModelForm):
+class notificationsForm(forms.ModelForm):
     class Meta:
-        model=Project
-        exclude=['username','post_date','design','usability','creativity','content','overall_score','avatar','country']
-        widgets={
-        'colors':forms.CheckboxSelectMultiple(),
-        'technologies':forms.CheckboxSelectMultiple(),
-        'categories':forms.CheckboxSelectMultiple(),
-        }
+        model=Notifications
+        exclude=['author','neighbourhood','post_date']
 
 class ProfileForm(forms.ModelForm):
     class Meta:
         model=Profile
         exclude=['username']
 
-class RatingForm(forms.ModelForm):
+class BlogPostForm(forms.ModelForm):
     class Meta:
-        model=Rating
-        exclude=['overall_score','profile','project']
+        model=BlogPost
+        exclude=['username','neighbourhood','avatar']
+
+class BusinessForm(forms.ModelForm):
+    class Meta:
+        model=Business
+        exclude=['owner','neighbourhood']
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model=Comment
+        exclude=['username','post']

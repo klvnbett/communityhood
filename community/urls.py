@@ -18,6 +18,7 @@ urlpatterns=[
     url(r'^new/notification$',views.new_notification, name='new-notification'),
     url(r'^update/profile$',views.update_profile, name='update-profile'),
     url(r'^search/',views.search_results, name='search_results'),
+    url(r'^my-profile/',views.my_profile, name='my-profile'),
 ]
 
 if settings.DEBUG:
