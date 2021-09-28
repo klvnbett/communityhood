@@ -61,12 +61,54 @@ def businesses(request):
     return render(request,'hood/businesses.html',{"businesses":businesses})
 
 def view_blog(request,id):
-    blog = BlogPost.objects.get(id=id)
+    current_user = request.user
 
-    return render(request,'hood/view_blog.html',{"blog":blog})
+    try:
+        comments = Comment.objects.filter(post_id=id)
+    except:
+        comments =[]
+
+    blog = BlogPost.objects.get(id=id)
+    if request.method =='POST':
+        form = CommentForm(request.POST,request.FILES)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.username = current_user
+            comment.post = blog
+            comment.save()
+    else:
+        form = CommentForm()
+
+    return render(request,'hood/view_blog.html',{"blog":blog,"form":form,"comments":comments})
 
 def user_profile(request,username):
     user = User.objects.get(username=username)
     profile =Profile.objects.get(username=user)
 
     return render(request,'hood/user_profile.html',{"profile":profile})
+
+def my_profile(request):
+    current_user=request.user
+    profile =Profile.objects.get(username=current_user)
+
+    return render(request,'hood/user_profile.html',{"profile":profile})
+
+def new_blogpost(request):
+    current_user=request.user
+    profile =Profile.objects.get(username=current_user)
+
+    if request.method=="POST":
+        form =BlogPostForm(request.POST,request.FILES)
+        if form.is_valid():
+            blogpost = form.save(commit = False)
+            blogpost.username = current_user
+            blogpost.neighbourhood = profile.neighbourhood
+            blogpost.avatar = profile.avatar
+            blogpost.save()
+
+        return HttpResponseRedirect('/blog')
+
+    else:
+        form = BlogPostForm()
+
+    return render(request,'hood/blogpost_form.html',{"form":form})
