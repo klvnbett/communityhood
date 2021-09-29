@@ -1,4 +1,4 @@
-{% extends "registration/base.html" %} {% include 'navbar.html' %} {% load bootstrap3 %} {% load static %} {% block content %}
+{% extends "registration/base.html" %} {% include 'navbar.html' %}{% load bootstrap3 %} {% load static %} {% block content %}
 <div class="container">
     <div class="row">
         <!-- Empty div -->
@@ -13,12 +13,12 @@
             <p>Please enter correct value</p>
             {% endif %}
 
-            <div class="panel panel-default" style="margin-top:210px;">
+            <div class="panel panel-default" style="margin-top:150px;">
 
                 <div class="panel-body">
 
                     <div class="text-center">
-                        <form action="{% url 'new-blogpost' %}" method="post" enctype="multipart/form-data">
+                        <form action="{% url 'new-notification' %}" method="post" enctype="multipart/form-data">
 
                             {% csrf_token%} {% bootstrap_form form %}
 

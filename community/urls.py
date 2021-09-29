@@ -2,6 +2,7 @@ from django.conf.urls import url,include
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth.views import LogoutView
 
 urlpatterns=[
     url(r'^$',views.index,name='Index'),
@@ -19,6 +20,7 @@ urlpatterns=[
     url(r'^update/profile$',views.update_profile, name='update-profile'),
     url(r'^search/',views.search_results, name='search_results'),
     url(r'^my-profile/',views.my_profile, name='my-profile'),
+    url('logout/', LogoutView.as_view(), {"next_page":''}),
 ]
 
 if settings.DEBUG:

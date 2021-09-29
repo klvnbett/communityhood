@@ -17,23 +17,25 @@ from rest_framework.views import APIView
 
 # Create your views here.
 def index(request):
-    # try:
-    #     if not request.user.is_authenticated:
-    #         return redirect('/accounts/login/')
-    #     current_user=request.user
-    #     profile =Profile.objects.get(username=current_user)
-    # except ObjectDoesNotExist:
-    #     return redirect('create-profile')
+    try:
+        if not request.user.is_authenticated:
+            return redirect('/accounts/login/')
+        current_user=request.user
+        profile =Profile.objects.get(username=current_user)
+    except ObjectDoesNotExist:
+        return redirect('create-profile')
 
     return render(request,'hood/index.html')
 
+@login_required(login_url='/accounts/login/')
 def notification(request):
     current_user=request.user
     profile=Profile.objects.get(username=current_user)
-    all_notifications = notifications.objects.filter(neighbourhood=profile.neighbourhood)
+    all_notifications = Notifications.objects.filter(neighbourhood=profile.neighbourhood)
 
     return render(request,'hood/notifications.html',{"notifications":all_notifications})
 
+@login_required(login_url='/accounts/login/')
 def blog(request):
     current_user=request.user
     profile=Profile.objects.get(username=current_user)
@@ -41,6 +43,7 @@ def blog(request):
 
     return render(request,'hood/blog.html',{"blogposts":blogposts})
 
+@login_required(login_url='/accounts/login/')
 def health(request):
     current_user=request.user
     profile=Profile.objects.get(username=current_user)
@@ -48,6 +51,7 @@ def health(request):
 
     return render(request,'hood/health.html',{"healthservices":healthservices})
 
+@login_required(login_url='/accounts/login/')
 def authorities(request):
     current_user=request.user
     profile=Profile.objects.get(username=current_user)
@@ -55,6 +59,7 @@ def authorities(request):
 
     return render(request,'hood/authorities.html',{"authorities":authorities})
 
+@login_required(login_url='/accounts/login/')
 def businesses(request):
     current_user=request.user
     profile=Profile.objects.get(username=current_user)
@@ -62,6 +67,7 @@ def businesses(request):
 
     return render(request,'hood/businesses.html',{"businesses":businesses})
 
+@login_required(login_url='/accounts/login/')
 def view_blog(request,id):
     current_user = request.user
 
@@ -83,18 +89,21 @@ def view_blog(request,id):
 
     return render(request,'hood/view_blog.html',{"blog":blog,"form":form,"comments":comments})
 
+@login_required(login_url='/accounts/login/')
 def user_profile(request,username):
     user = User.objects.get(username=username)
     profile =Profile.objects.get(username=user)
 
     return render(request,'hood/user_profile.html',{"profile":profile})
 
+@login_required(login_url='/accounts/login/')
 def my_profile(request):
     current_user=request.user
     profile =Profile.objects.get(username=current_user)
 
     return render(request,'hood/user_profile.html',{"profile":profile})
 
+@login_required(login_url='/accounts/login/')
 def new_blogpost(request):
     current_user=request.user
     profile =Profile.objects.get(username=current_user)
@@ -115,6 +124,7 @@ def new_blogpost(request):
 
     return render(request,'hood/blogpost_form.html',{"form":form})
 
+@login_required(login_url='/accounts/login/')
 def new_business(request):
     current_user=request.user
     profile =Profile.objects.get(username=current_user)
@@ -135,7 +145,7 @@ def new_business(request):
     return render(request,'hood/business_form.html',{"form":form})
 
 
-
+@login_required(login_url='/accounts/login/')
 def create_profile(request):
     current_user=request.user
     if request.method=="POST":
@@ -152,6 +162,7 @@ def create_profile(request):
     return render(request,'hood/profile_form.html',{"form":form})
 
 
+@login_required(login_url='/accounts/login/')
 def new_notification(request):
     current_user=request.user
     profile =Profile.objects.get(username=current_user)
@@ -175,7 +186,7 @@ def new_notification(request):
 
     return render(request,'hood/notifications_form.html',{"form":form})
 
-
+@login_required(login_url='/accounts/login/')
 def update_profile(request):
     current_user=request.user
     if request.method=="POST":
@@ -199,7 +210,7 @@ def update_profile(request):
 
 
 
-
+@login_required(login_url='/accounts/login/')
 def search_results(request):
     if 'blog' in request.GET and request.GET["blog"]:
         search_term = request.GET.get("blog")
