@@ -1,9 +1,10 @@
 
 # COMMUNITY HOOD 
+
 ## Author Kipkemoi Bett
 
 ## Description
-This is a web application where users can post project(s) they have created and have them reviewed by their peers.
+This web-app allows a user to create a Profile,Category,Country,Technology,Color and Projects that are all under his username allowing other users to vote for them and visit the particular projects site.
 
 ------------------------------------------------------------------------
 
